@@ -1,0 +1,4 @@
+services:
+#    olix_security.example:
+#        class: Olix\SecurityBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
