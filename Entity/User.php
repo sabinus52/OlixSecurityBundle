@@ -68,7 +68,7 @@ class User extends BaseUser {
     {
         parent::__construct();
         $this->enabled = true;
-        $this->avatar = 'Others/Default.png';
+        $this->avatar = 'default.png';
     }
 
 
