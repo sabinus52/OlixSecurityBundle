@@ -1,0 +1,2 @@
+olix_security_fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
