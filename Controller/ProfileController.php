@@ -12,8 +12,11 @@ namespace Olix\SecurityBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Finder\Finder;
 use FOS\UserBundle\Model\UserInterface;
 use Olix\SecurityBundle\Form\Type\ProfileFormType;
+use Olix\SecurityBundle\Avatar;
+use Olix\SecurityBundle\Avatar\Gravatar;
 
 
 class ProfileController extends Controller
@@ -50,5 +53,27 @@ class ProfileController extends Controller
         ));
     }
 
+
+    /**
+     * Affichage de la liste des avatars disponibles dans un popup
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function avatarAction ()
+    {
+        $finder = new Finder();
+        $result = array();
+        $finder->files()->in(__DIR__.'/../Resources/public/avatar')->name('*.png');
+        foreach ($finder as $files) {
+            $result[$files->getRelativePath()][] = $files->getRelativePathname();
+        }
+        $user = $this->getUser();
+        $gravatar = new Gravatar();
+        $gravatar->setAvatarSize(150);
+        return $this->render('OlixSecurityBundle:Profile:avatar.html.twig', array(
+            'avatars' => $result,
+            'gravatar' => $gravatar->get($user->getEmail()),
+        ));
+    }
 
 }

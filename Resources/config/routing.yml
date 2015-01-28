@@ -10,3 +10,6 @@ olix_security_fos_user_security:
 olix_security_profile_edit:
     pattern:  /profile/edit
     defaults: { _controller: "OlixSecurityBundle:Profile:edit" }
+olix_security_profile_avatar:
+    pattern:  /profile/avatar
+    defaults: { _controller: "OlixSecurityBundle:Profile:avatar" }

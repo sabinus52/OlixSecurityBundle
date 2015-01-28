@@ -26,18 +26,32 @@
                     <div class="clearfix"></div>
                     <div class="tab-content">
                         <div class="tab-pane active" id="profile">
-                        
+
                             <form action="{{ path('olix_security_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">{{ 'form.username'|trans }}</label>
-                                    <div class="col-sm-10 "><p class="form-control-static text-primary"><b>{{ user.username }}</b></p></div>
-                                </div>
-                                {{ form_widget(form) }}
-                                <div class="form-group">
-                                    <div class="col-sm-10 col-sm-offset-2"><input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}" /></div>
+                                <div class="row">
+                                
+                                    <div class="col-md-3 text-center">
+                                        <a href="{{ path('olix_security_profile_avatar') }}" role="button" data-toggle="modal" data-target="#modalAvatar">
+                                            <img id="imgAvatar" src="{{ asset(user.avatar) }}"
+                                            class="img-rounded" data-toggle="tooltip" data-placement="bottom"
+                                            title="Cliquer pour changer d'avatar" alt="Cliquer pour changer d'avatar">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-9">
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">{{ 'form.username'|trans }}</label>
+                                            <div class="col-sm-10 "><p class="form-control-static text-primary"><b>{{ user.username }}</b></p></div>
+                                        </div>
+                                        {{ form_widget(form) }}
+                                        <div class="form-group">
+                                            <div class="col-sm-10 col-sm-offset-2"><input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}" /></div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </form>
-                        
+
                         </div>
                         <div class="tab-pane" id="password"></div>
                     </div>
@@ -48,4 +62,32 @@
 
     </div>
 
+
+    <div class="modal fade" id="modalAvatar" tabindex="1" role="dialog" aria-labelledby="modalAvatarBody" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modalAvatarBody">Choisir son avatar</h4>
+                </div>
+                <div class="modal-body center-block">
+                    <p class="text-center center-block"><img alt="" src="{{ asset('bundles/olixadmin/images/spinner-rectangle.gif') }}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheet %}
+<link href="{{ asset('bundles/olixsecurity/css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/olixsecurity/js/script.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 {% endblock %}

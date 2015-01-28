@@ -27,6 +27,7 @@ class ProfileFormType extends BaseFormType {
         $builder
         ->add('name', 'text', array('label' => 'Nom :'))
         ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
+        ->add('avatar', 'hidden')
         ;
     }
 

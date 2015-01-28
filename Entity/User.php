@@ -46,7 +46,7 @@ class User extends BaseUser {
      * 
      * @var string
      * 
-     * @ORM\Column(name="avatar", type="string", length=50, nullable=true)
+     * @ORM\Column(name="avatar", type="string", length=250, nullable=true)
      */
     protected $avatar;
 
@@ -114,7 +114,11 @@ class User extends BaseUser {
      */
     public function getAvatar()
     {
-        return $this->avatar;
+        if (substr($this->avatar, 0, 4) == 'http') {
+            return $this->avatar;
+        } else {
+            return 'bundles/olixsecurity/avatar/'.$this->avatar;
+        }
     }
 
 

@@ -1,0 +1,26 @@
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="modalAvatarBody">Choisir son avatar</h4>
+        </div>
+        <div class="modal-body">
+            <h4>Hommes</h4>
+            {% for avatar in avatars.males %}
+                <a href="{{ avatar }}" onclick=" return OlixSecurity.selectAvatarIMG(this)" class="avatar"><img alt="" src="{{ asset('bundles/olixsecurity/avatar/' ~ avatar) }}"></a>
+            {% endfor %}
+            <h4>Femmes</h4>
+            {% for avatar in avatars.females %}
+                <a href="{{ avatar }}" onclick="return OlixSecurity.selectAvatarIMG(this)" class="avatar"><img alt="" src="{{ asset('bundles/olixsecurity/avatar/' ~ avatar) }}"></a>
+            {% endfor %}
+            <h4>Gravatar &amp; divers</h4>
+            <a href="{{ gravatar }}" onclick="return OlixSecurity.selectAvatarURL('{{ gravatar }}')" class="avatar"><img alt="" src="{{ gravatar }}"></a>
+            {% for avatar in avatars.others %}
+                <a href="{{ avatar }}" onclick="return OlixSecurity.selectAvatarIMG(this)" class="avatar"><img alt="" src="{{ asset('bundles/olixsecurity/avatar/' ~ avatar) }}"></a>
+            {% endfor %}
+            <h4>Url</h4>
+            <div class="form-inline">
+                <input type="text" class="form-control" value="" style="width: 80%;" id="ctrlURL">
+                <button class="btn btn-default" onclick="return OlixSecurity.selectAvatarURL($('#ctrlURL').val())">Ok</button>
+            </div>
+        </div>
+    </div>

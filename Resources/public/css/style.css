@@ -3,3 +3,26 @@
 body.olix-login {
     background-color:#f8f8f8;
 }
+
+
+/**
+ * Profil
+ */
+#imgAvatar{
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    padding: 10px;
+} 
+a.avatar {
+    display:inline-block;
+    line-height: 32px;
+    content: ' ';
+}
+a.avatar > img {
+    width: 32px;
+    height: 32px;
+}
+a.avatar:hover {
+    background-color: #ddd;
+}
