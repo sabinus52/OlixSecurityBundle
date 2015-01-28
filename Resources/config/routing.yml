@@ -1,2 +1,12 @@
+###
+# Page de sécurité
+##
 olix_security_fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+###
+# Profil utilisateur
+##
+olix_security_profile_edit:
+    pattern:  /profile/edit
+    defaults: { _controller: "OlixSecurityBundle:Profile:edit" }
