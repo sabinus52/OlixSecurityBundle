@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Finder\Finder;
 use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Form\Type\ChangePasswordFormType;
 use Olix\SecurityBundle\Form\Type\ProfileFormType;
 use Olix\SecurityBundle\Avatar;
 use Olix\SecurityBundle\Avatar\Gravatar;
@@ -34,13 +35,17 @@ class ProfileController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         
-        $form = $this->createForm(
+        $formProfile = $this->createForm(
             new ProfileFormType($this->container->getParameter('fos_user.model.user.class')),
             $user
         );
+        $formPassword = $this->createForm(
+            new ChangePasswordFormType($this->container->getParameter('fos_user.model.user.class')),
+            $user
+        );
         
-        $form->handleRequest($this->getRequest());
-        if ($form->isValid()) {
+        $formProfile->handleRequest($this->getRequest());
+        if ($formProfile->isValid()) {
             $userManager = $this->get('fos_user.user_manager');
             $userManager->updateUser($user);
             $this->container->get('session')->getFlashBag()->set('success', $this->get('translator')->trans('profile.flash.updated', array(), 'FOSUserBundle'));
@@ -49,7 +54,11 @@ class ProfileController extends Controller
         
         return $this->container->get('olix.admin')->render('OlixSecurityBundle:Profile:edit.html.twig', null, array(
             'user' => $user,
-            'form' => $form->createView(),
+            'tab'  => 'profile',
+            'form' => array(
+                'profile'  => $formProfile->createView(),
+                'password' => $formPassword->createView(),
+            ),
         ));
     }
 
@@ -73,6 +82,46 @@ class ProfileController extends Controller
         return $this->render('OlixSecurityBundle:Profile:avatar.html.twig', array(
             'avatars' => $result,
             'gravatar' => $gravatar->get($user->getEmail()),
+        ));
+    }
+
+
+    /**
+     * Changement du mot de passe
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changePasswordAction()
+    {
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+        
+        $formProfile = $this->createForm(
+            new ProfileFormType($this->container->getParameter('fos_user.model.user.class')),
+            $user
+        );
+        $formPassword = $this->createForm(
+            new ChangePasswordFormType($this->container->getParameter('fos_user.model.user.class')),
+            $user
+        );
+        
+        $formPassword->handleRequest($this->getRequest());
+        if ($formPassword->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+            $this->container->get('session')->getFlashBag()->set('success', $this->get('translator')->trans('change_password.flash.success', array(), 'FOSUserBundle'));
+            return $this->redirect($this->generateUrl('olix_security_profile_edit'));
+        }
+        
+        return $this->container->get('olix.admin')->render('OlixSecurityBundle:Profile:edit.html.twig', null, array(
+            'user' => $user,
+            'tab'  => 'password',
+            'form' => array(
+                'profile'  => $formProfile->createView(),
+                'password' => $formPassword->createView(),
+            ),
         ));
     }
 

@@ -13,3 +13,6 @@ olix_security_profile_edit:
 olix_security_profile_avatar:
     pattern:  /profile/avatar
     defaults: { _controller: "OlixSecurityBundle:Profile:avatar" }
+olix_security_profile_change_password:
+    pattern:  /profile/change-password
+    defaults: { _controller: "OlixSecurityBundle:Profile:changePassword" }
