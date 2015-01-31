@@ -1,0 +1,58 @@
+{% extends 'OlixAdminBundle::layout.html.twig' %}
+
+{% block header2 %}Management des utilisateurs et de leurs droits à l'application{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-sm-12">{% include 'OlixAdminBundle::include/flashbag.html.twig' %}</div>
+
+        <div class="col-sm-12">
+            <div class="olix-portlet olix-portlet-border">
+                <div class="olix-portlet-header">
+                    <div class="icon"><i class="fa fa-user"></i></div>
+                    <div class="title">Liste des utilisateurs</div>
+                    <div class="toolbar">
+                        <a href="{{ path('olix_security_manager_user_create') }}" class="btn btn-success btn-create" title="Ajouter un utilisateur"><i class="fa fa-plus"></i> Ajouter</a>
+                    </div>
+                </div>
+                {{ datatable_render_html(datatable) }}
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'OlixAdminBundle::include/modal-delete.html.twig' with {'element': 'cet utilisateur'} %}
+
+{% endblock %}
+
+{% block stylesheet %}
+{{ parent() }}
+{% include 'OlixDatatablesBootstrapBundle::stylesheet.html.twig' %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{% include 'OlixDatatablesBootstrapBundle::javascript.html.twig' %}
+{{ datatable_render_js(datatable) }}
+
+<script type="text/javascript">
+
+var asset = '{{ asset('') }}';
+
+function render_column_avatar(data, type, row, meta) {
+    if (data.substr(0, 4) == 'http')
+        return '<img src="'+data+'" class="img-rounded" width="32" height="32" alt="">';
+    else
+        return '<img src="'+asset+data+'" class="img-rounded" width="32" height="32" alt="">';
+}
+
+function render_column_statut(data, type, row, meta) {
+    if (row.locked) return '<span class="label label-danger">Suspendu</span>';
+    else if (row.expired) return '<span class="label label-warning">Expiré</span>';
+    else return '<span class="label label-success">Actif</span>';
+}
+
+</script>
+{% endblock %}

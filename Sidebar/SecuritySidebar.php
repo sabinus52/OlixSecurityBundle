@@ -43,9 +43,15 @@ class SecuritySidebar
     {
         if (!$this->context->isGranted('ROLE_SUPER_ADMIN')) return;
         
-        $sidebar->addChild('olix_security', array(
+        $security = $sidebar->addChild('olix_security', array(
             'label' => 'Droits & accès',
             'icon'  => 'fa fa-lock fa-fw',
+            'route' => 'olix_security_manager',
+        ));
+        $security->addChild('olix_security_users', array(
+            'label' => 'Gestion des utilisateurs',
+            'icon'  => 'fa fa-user fa-fw',
+            'route' => 'olix_security_manager_user_list',
         ));
     }
 

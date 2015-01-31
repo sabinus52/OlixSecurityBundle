@@ -1,0 +1,76 @@
+{% extends 'OlixAdminBundle::layout.html.twig' %}
+
+{% block header2 %}Management des utilisateurs et de leurs droits à l'application{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-sm-12">{{ form_errors(form) }}</div>
+
+        <div class="col-sm-12">
+        
+            <div class="olix-portlet olix-portlet-border">
+                <div class="olix-portlet-header">
+                    <div class="icon"><i class="fa fa-edit"></i></div>
+                    <div class="title">Formulaire de modification de l'utilisateur <b>{{ user.name }}</b></div>
+                </div>
+                <div class="olix-portlet-body">
+                    <form method="post" novalidate="novalidate" class="form-horizontal" {{ form_enctype(form) }}>
+                        <h4>Informations de connexion</h4>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Identifiant</label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static text-primary"><strong>{{ user.username }}</strong></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Informations générales</h4>
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.email) }}
+                        <hr>
+                        <h4>Activation du compte</h4>
+                        {{ form_row(form.locked) }}
+                        {{ form_row(form.expiresAt) }}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Compte expiré</label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">
+                                {% if user.expired %}
+                                    <span class="label label-danger">OUI</span>
+                                {% elseif user.expiresat %}
+                                    <span class="label label-warning">Dans {{ user.expiresinterval }}</span>
+                                {% else %}
+                                    <span class="label label-success">NON</span>
+                                {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        {{ form_rest(form) }}
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                                <a href="{{ path('olix_security_manager_user_list') }}" class="btn btn-default">Annuler</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheet %}
+{{ parent() }}
+{% include 'OlixFormsExtBootstrapBundle::stylesheet.html.twig' %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{% include 'OlixFormsExtBootstrapBundle::javascript.html.twig' %}
+{{ form_javascript(form) }}
+{% endblock %}

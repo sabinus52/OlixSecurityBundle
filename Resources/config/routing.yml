@@ -16,3 +16,31 @@ olix_security_profile_avatar:
 olix_security_profile_change_password:
     pattern:  /profile/change-password
     defaults: { _controller: "OlixSecurityBundle:Profile:changePassword" }
+
+###
+# Gestion des utilisateurs
+##
+olix_security_manager:
+    pattern:  /security
+    defaults: { _controller: "OlixSecurityBundle:UserManager:list" }
+olix_security_manager_user_list:
+    pattern:  /security/users
+    defaults: { _controller: "OlixSecurityBundle:UserManager:list" }
+olix_security_manager_user_create:
+    pattern:  /security/users/create
+    defaults: { _controller: "OlixSecurityBundle:UserManager:create" }
+olix_security_manager_user_edit:
+    pattern:  /security/users/edit/{username}
+    defaults: { _controller: "OlixSecurityBundle:UserManager:edit" }
+    options:
+        expose: true
+olix_security_manager_user_delete:
+    pattern:  /security/users/delete/{username}
+    defaults: { _controller: "OlixSecurityBundle:UserManager:delete" }
+    options:
+        expose: true
+olix_security_manager_user_changepwd:
+    pattern:  /security/users/change-password/{username}
+    defaults: { _controller: "OlixSecurityBundle:UserManager:changePassword" }
+    options:
+        expose: true
