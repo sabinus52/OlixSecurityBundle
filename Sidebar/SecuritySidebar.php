@@ -53,6 +53,11 @@ class SecuritySidebar
             'icon'  => 'fa fa-user fa-fw',
             'route' => 'olix_security_manager_user_list',
         ));
+        $security->addChild('olix_security_groups', array(
+            'label' => 'Gestion des groupes',
+            'icon'  => 'fa fa-group fa-fw',
+            'route' => 'olix_security_manager_group_list',
+        ));
     }
 
 }

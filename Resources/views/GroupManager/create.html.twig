@@ -1,0 +1,41 @@
+{% extends 'OlixAdminBundle::layout.html.twig' %}
+
+{% block header2 %}Management des groupes d'utilisateurs et de leurs droits à l'application{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-sm-12">{{ form_errors(form) }}</div>
+
+        <div class="col-sm-12">
+        
+            <div class="olix-portlet olix-portlet-border">
+                <div class="olix-portlet-header">
+                    <div class="icon"><i class="fa fa-edit"></i></div>
+                    <div class="title">Formulaire de création d'un nouveau groupe</div>
+                </div>
+                <div class="olix-portlet-body">
+                    <form method="post" novalidate="novalidate" class="form-horizontal" {{ form_enctype(form) }}>
+                        <h4>Informations générales</h4>
+                        {{ form_row(form.name) }}
+                        <hr>
+                        <h4>Attribution des rôles d'access</h4>
+                        {{ form_row(form.roles) }}
+                        <hr>
+                        {{ form_rest(form) }}
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-primary">Ajouter ce groupe</button>
+                                <a href="{{ path('olix_security_manager_user_list') }}" class="btn btn-default">Annuler</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

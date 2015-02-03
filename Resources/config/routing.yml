@@ -44,3 +44,23 @@ olix_security_manager_user_changepwd:
     defaults: { _controller: "OlixSecurityBundle:UserManager:changePassword" }
     options:
         expose: true
+
+###
+# Gestion des groupes
+##
+olix_security_manager_group_list:
+    pattern:  /security/groups
+    defaults: { _controller: "OlixSecurityBundle:GroupManager:list" }
+olix_security_manager_group_create:
+    pattern:  /security/groups/create
+    defaults: { _controller: "OlixSecurityBundle:GroupManager:create" }
+olix_security_manager_group_edit:
+    pattern:  /security/groups/edit/{id}
+    defaults: { _controller: "OlixSecurityBundle:GroupManager:edit" }
+    options:
+        expose: true
+olix_security_manager_group_delete:
+    pattern:  /security/groups/delete/{id}
+    defaults: { _controller: "OlixSecurityBundle:GroupManager:delete" }
+    options:
+        expose: true

@@ -1,0 +1,39 @@
+{% extends 'OlixAdminBundle::layout.html.twig' %}
+
+{% block header2 %}Management des groupes d'utilisateurs et de leurs droits à l'application{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-sm-12">{% include 'OlixAdminBundle::include/flashbag.html.twig' %}</div>
+
+        <div class="col-sm-12">
+            <div class="olix-portlet olix-portlet-border">
+                <div class="olix-portlet-header">
+                    <div class="icon"><i class="fa fa-group"></i></div>
+                    <div class="title">Liste des groupes</div>
+                    <div class="toolbar">
+                        <a href="{{ path('olix_security_manager_group_create') }}" class="btn btn-success btn-create" title="Ajouter un groupe"><i class="fa fa-plus"></i> Ajouter</a>
+                    </div>
+                </div>
+                {{ datatable_render_html(datatable) }}
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'OlixAdminBundle::include/modal-delete.html.twig' with {'element': 'ce groupe'} %}
+
+{% endblock %}
+
+{% block stylesheet %}
+{{ parent() }}
+{% include 'OlixDatatablesBootstrapBundle::stylesheet.html.twig' %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{% include 'OlixDatatablesBootstrapBundle::javascript.html.twig' %}
+{{ datatable_render_js(datatable) }}
+{% endblock %}

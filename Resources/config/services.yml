@@ -2,9 +2,13 @@ services:
 
     olix_security.sidebar:
         class: Olix\SecurityBundle\Sidebar\SecuritySidebar
-        arguments: [@security.context]
+        arguments: [ "@security.context" ]
 
     olix_security.datatable.user:
         class: Olix\SecurityBundle\Datatables\UserDatatable
+        tags:
+            - { name: sg.datatable.view }
+    olix_security.datatable.group:
+        class: Olix\SecurityBundle\Datatables\GroupDatatable
         tags:
             - { name: sg.datatable.view }
