@@ -82,6 +82,12 @@ class GroupFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => true
             ))
+            ->add('users', 'olix_doublelist_entity', array(
+                'label' => 'Utilisateurs',
+                'class' => 'OlixSecurityBundle:User',
+                'property' => 'name',
+                'mapped' => false
+            ))
         ;
     }
 

@@ -79,6 +79,13 @@ class GroupManagerController extends Controller
                 
                 $manager->updateGroup($group);
                 
+                $manager = $this->container->get('fos_user.user_manager');
+                // Rajoute les utilisateurs selectionnés dans le groupe
+                foreach ($form->get('users')->getData() as $user) {
+                    $user->addGroup($group);
+                    $manager->updateUser($user);
+                }
+                
                 $this->get('session')->getFlashBag()->set('success', "Le groupe <strong>".$group->getName()."</strong> a été ajouté avec succès");
                 return $this->redirect($this->generateUrl('olix_security_manager_group_list'));
             }
@@ -113,6 +120,11 @@ class GroupManagerController extends Controller
             $group
         );
         
+        // Récupération des utilisateurs appartenant à ce groupe (@ignore par FOS) et affecte dans le formulaire
+        $repository = $this->getDoctrine()->getRepository('OlixSecurityBundle:User');
+        $usersInGroup = $repository->findByGroup($group);
+        $form->get('users')->setData($usersInGroup);
+        
         // Validation du formulaire
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
@@ -120,6 +132,18 @@ class GroupManagerController extends Controller
             if ($form->isValid()) {
                 
                 $manager->updateGroup($group);
+                
+                $manager = $this->container->get('fos_user.user_manager');
+                // Enlève tous les utilisateurs courants actuel du groupe
+                foreach ($usersInGroup as $user) {
+                    $user->removeGroup($group);
+                    $manager->updateUser($user);
+                }
+                // Rajoute les utilisateurs selectionnés dans le groupe
+                foreach ($form->get('users')->getData() as $user) {
+                    $user->addGroup($group);
+                    $manager->updateUser($user);
+                }
                 
                 $this->get('session')->getFlashBag()->set('success', "Le groupe <strong>".$group->getName()."</strong> a été modifié avec succès");
                 return $this->redirect($this->generateUrl('olix_security_manager_group_list'));

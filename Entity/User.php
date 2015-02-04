@@ -1,13 +1,11 @@
 <?php
 /**
- *
  * Entité de l'utilisateur
- *
- *
+ * 
+ * @author Olivier <sabinus52@gmail.com>
+ * 
  * @package Olix
  * @subpackage SecurityBundle
- * @author Olivier
- *
  */
 
 namespace Olix\SecurityBundle\Entity;
@@ -19,13 +17,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Olix\SecurityBundle\Entity\UserRepository")
  * @ORM\Table(name="olix_user")
  * @UniqueEntity(fields = "username", message = "Ce login est déjà utilisé, merci d'en choisir un autre")
  * @UniqueEntity(fields = "email", message = "Cet email est déjà utilisé, merci d'en choisir un autre")
  */
-class User extends BaseUser {
-
+class User extends BaseUser
+{
 
     /**
      * @var integer
@@ -68,6 +66,14 @@ class User extends BaseUser {
      */
     protected $lastActivity;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Olix\SecurityBundle\Entity\Group")
+     * @ORM\JoinTable(name="olix_user_group",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    protected $groups;
 
 
     /**

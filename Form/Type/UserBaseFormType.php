@@ -81,6 +81,11 @@ class UserBaseFormType extends AbstractType
                     'pickerPosition' => 'bottom-left',
                     'minuteStep' => 5
             )))
+            ->add('groups', 'olix_doublelist_entity', array(
+                'label' => 'Groupes',
+                'class' => 'OlixSecurityBundle:Group',
+                'property' => 'name',
+            ))
         ;
     }
 

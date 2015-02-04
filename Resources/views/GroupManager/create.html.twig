@@ -23,6 +23,9 @@
                         <h4>Attribution des rôles d'access</h4>
                         {{ form_row(form.roles) }}
                         <hr>
+                        <h4>Liste des utilisateurs appartenant à ce groupe</h4>
+                        {{ form_row(form.users) }}
+                        <hr>
                         {{ form_rest(form) }}
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
@@ -38,4 +41,15 @@
 
     </div>
 
+{% endblock %}
+
+{% block stylesheet %}
+{{ parent() }}
+{% include 'OlixFormsExtBootstrapBundle::stylesheet.html.twig' %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{% include 'OlixFormsExtBootstrapBundle::javascript.html.twig' %}
+{{ form_javascript(form) }}
 {% endblock %}

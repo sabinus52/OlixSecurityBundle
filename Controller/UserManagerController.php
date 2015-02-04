@@ -13,6 +13,9 @@ namespace Olix\SecurityBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
 use Olix\SecurityBundle\Form\Type\UserCreateFormType;
 use Olix\SecurityBundle\Form\Type\UserEditFormType;
 use Olix\SecurityBundle\Form\Type\UserChangePwdFormType;
@@ -39,19 +42,19 @@ class UserManagerController extends Controller
         // Création de la Datatables
         $datatable = $this->get('olix_security.datatable.user');
         $datatable->buildDatatableView();
-        $serializer = $this->get('sg_datatables.serializer');
+        
+        // Serialize les données
+        $normalizer = new GetSetMethodNormalizer();
+        $normalizer->setIgnoredAttributes(array('groups'));
+        $encoder = new JsonEncoder();
+        $serializer = new Serializer(array($normalizer), array($encoder));
         $datatable->setData($serializer->serialize($result, 'json'));
         
         // Déclaration d'un formulaire vide pour la suppression d'un élément pour éviter le piratage
         $form = $this->createFormBuilder()->getForm();
         
-        // Récupération de tous les utilisateurs
-        $manager = $this->container->get('fos_user.user_manager');
-        $result = $manager->findUsers();
-        
         // Affichage de la page
         return $this->container->get('olix.admin')->render('OlixSecurityBundle:UserManager:list.html.twig', 'olix_security_users', array(
-            'users'        => $result,
             'form'         => $form->createView(),
             'datatable'    => $datatable,
         ));
