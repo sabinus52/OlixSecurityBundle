@@ -1,8 +1,18 @@
+parameters:
+    # Delai en minutes à partir duquel l'utilisateur est considéré comme non connecté
+    olix.security.activity.delay: 5
+
 services:
 
     olix_security.sidebar:
         class: Olix\SecurityBundle\Sidebar\SecuritySidebar
         arguments: [ "@security.context" ]
+
+    olix_security.activity.listener:
+        class: Olix\SecurityBundle\Listener\ActivityListener
+        arguments: [ "@security.context", "@doctrine.orm.entity_manager", "%olix.security.activity.delay%" ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
     olix_security.datatable.user:
         class: Olix\SecurityBundle\Datatables\UserDatatable

@@ -55,6 +55,7 @@ class UserManagerController extends Controller
         
         // Affichage de la page
         return $this->container->get('olix.admin')->render('OlixSecurityBundle:UserManager:list.html.twig', 'olix_security_users', array(
+            'delay_online' => $this->container->getParameter('olix.security.activity.delay'),
             'form'         => $form->createView(),
             'datatable'    => $datatable,
         ));

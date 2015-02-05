@@ -221,4 +221,68 @@ class User extends BaseUser
         return $this->lastActivity;
     }
 
+
+    /**
+     * Indique que l'utilisateur est en activité
+     *
+     * @return User
+     */
+    public function setOnline()
+    {
+        $this->setLastActivity(new \DateTime());
+        return $this;
+    }
+
+    /**
+     * Verifie si l'utilisateur est en activité
+     *
+     * @param integer $minDelay Minutes d'inactivité
+     * @return boolean
+     */
+    public function isOnline($minDelay = 2)
+    {
+        $delay = new \DateTime();
+        $strDelay = sprintf('%s minutes ago', $minDelay);
+        $delay->setTimestamp(strtotime($strDelay));
+        return ($this->getLastActivity() > $delay);
+    }
+
+    /**
+     * Retourne le nombre de minutes écoulées depuis sa dernière activité
+     * 
+     * @return integer
+     */
+    public function getOnline()
+    {
+        if (!$this->getLastActivity()) return 9999;
+        $now = new \DateTime();
+        $interval = $now->diff($this->getLastActivity());
+        return $interval->i;
+    }
+
+
+    /**
+     * Retourne le temps écoulé depuis la dernière connexion
+     *
+     * @return string
+     */
+    public function getIntervalLastLogin()
+    {
+        if (!$this->lastLogin) return '';
+        $now = new \DateTime();
+        $interval = $now->diff($this->lastLogin);
+        if ($interval->days == 1)
+            return $interval->format('%a jour');
+        elseif ($interval->days > 1)
+            return $interval->format('%a jours');
+        elseif ($interval->h == 1)
+            return $interval->format('%h heure');
+        elseif ($interval->h > 1)
+            return $interval->format('%h heures');
+        elseif ($interval->i == 1)
+            return $interval->format('%i minute');
+        else
+            return $interval->format('%i minutes');
+    }
+
 }

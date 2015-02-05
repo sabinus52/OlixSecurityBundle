@@ -33,6 +33,11 @@ class UserDatatable extends AbstractDatatableView
                   'class' => 'text-center',
                   'render' => 'render_column_avatar'
             ))
+            ->add('online', 'column', array(
+                  'title' => 'Connecté',
+                  'class' => 'text-center',
+                  'render' => 'render_column_online'
+            ))
             ->add('name', 'column', array(
                   'title' => 'Nom'
             ))
@@ -49,7 +54,11 @@ class UserDatatable extends AbstractDatatableView
             ))
             ->add('lastLogin', 'datetime', array(
                   'title' => 'Dernière connexion',
-                  'format' => 'DD/MM/YYYY HH:mm'
+                  'format' => 'DD/MM/YYYY HH:mm',
+                  'render' => 'render_column_login'
+            ))
+            ->add('intervalLastLogin', 'column', array(
+                  'visible' => false
             ))
             // Boutons Actions
             ->add(null, 'action', array(
