@@ -17,9 +17,17 @@
         "security",
         "User management"
     ],
+    "require": {
+        "symfony/symfony": "~2.6",
+        "doctrine/orm": "~2.2",
+        "doctrine/doctrine-bundle": "~1.2",
+        "olix/datatables-bootstrap-bundle": "dev-master",
+        "olix/formsext-bootstrap-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
+    },
     "autoload" : {
         "psr-4" : {
-            "Olix\\SecurityBundle" : ""
+            "Olix\\SecurityBundle\\" : ""
         }
     }
 }
