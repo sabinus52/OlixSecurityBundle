@@ -37,8 +37,8 @@ class GroupDatatable extends AbstractDatatableView
             // Boutons Actions
             ->add(null, 'action', array(
                 'title' => '',
-                'start' => '<div class="olix-actions">',
-                'end' => '</div>',
+                'start_html' => '<div class="olix-actions">',
+                'end_html' => '</div>',
                 'actions' => array(
                     array(
                         'route' => 'olix_security_manager_group_edit',

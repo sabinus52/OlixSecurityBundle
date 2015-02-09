@@ -40,12 +40,12 @@
                                     <div class="col-md-9">
 
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">{{ 'form.username'|trans }}</label>
-                                            <div class="col-sm-10 "><p class="form-control-static text-primary"><b>{{ user.username }}</b></p></div>
+                                            <label class="col-sm-3 control-label">{{ 'form.username'|trans }}</label>
+                                            <div class="col-sm-9"><p class="form-control-static text-primary"><b>{{ user.username }}</b></p></div>
                                         </div>
                                         {{ form_widget(form.profile) }}
                                         <div class="form-group">
-                                            <div class="col-sm-10 col-sm-offset-2"><input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}" /></div>
+                                            <div class="col-sm-9 col-sm-offset-3"><input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}" /></div>
                                         </div>
 
                                     </div>
@@ -58,7 +58,7 @@
                             <form action="{{ path('olix_security_profile_change_password') }}" {{ form_enctype(form.password) }} method="POST" class="form-horizontal">
                                 {{ form_widget(form.password) }}
                                 <div class="form-group">
-                                    <div class="col-sm-10 col-sm-offset-2"><input type="submit" class="btn btn-primary" value="{{ 'change_password.submit'|trans }}" /></div>
+                                    <div class="col-sm-9 col-sm-offset-3"><input type="submit" class="btn btn-primary" value="{{ 'change_password.submit'|trans }}" /></div>
                                 </div>
                             </form>
 

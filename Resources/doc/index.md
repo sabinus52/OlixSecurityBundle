@@ -1,7 +1,7 @@
 Guide de démarrage
 ==================
 
-### Tranduction
+### Traduction
 
 Il faut activer le `translator` dans votre configuration.
 

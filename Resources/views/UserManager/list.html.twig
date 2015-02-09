@@ -62,8 +62,9 @@ function render_column_statut(data, type, row, meta) {
 }
 
 function render_column_login(data, type, row, meta, dateFormat) {
-    return render_datetime(data, type, row, meta, dateFormat)
-        +' <em>(Il y a '+row.intervalLastLogin+')</em>';
+    if (data)
+        return render_datetime(data, type, row, meta, dateFormat)
+            +' <em>(Il y a '+row.intervalLastLogin+')</em>';
 }
 
 </script>
