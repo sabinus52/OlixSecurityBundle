@@ -7,10 +7,11 @@
 {% include "OlixAdminBundle::head.html.twig" %}
 <title>{% block title %}BO - {{ olix.brand }}{% endblock %}</title>
 {% include "OlixAdminBundle::stylesheet.html.twig" %}
-{% block stylesheet %}
 <link href="{{ asset('bundles/olixsecurity/css/style.css') }}" rel="stylesheet">
-{% endblock %}
+{% if olix.theme %}<link href="{{ asset(olix.theme) }}" rel="stylesheet">{% endif %}
+{% block stylesheet %}{% endblock %}
 </head>
+
 <body class="olix-login">
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
