@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">{% if olix.logo is defined %}<img alt="" src="{{ asset(olix.logo) }}">{% endif %} {{ olix.brand }}</a>
-            <p class="navbar-text hidden-xs hidden-sm">{{ olix.description }}</p>
+            <p class="navbar-text hidden-xs hidden-sm">{{ olix.description|raw }}</p>
         </div>
     </div>
 </div>
