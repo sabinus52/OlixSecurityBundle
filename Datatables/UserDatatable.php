@@ -54,7 +54,7 @@ class UserDatatable extends AbstractDatatableView
             ))
             ->add('lastLogin', 'datetime', array(
                   'title' => 'Dernière connexion',
-                  'format' => 'DD/MM/YYYY HH:mm',
+                  'date_format' => 'DD/MM/YYYY HH:mm',
                   'render' => 'render_column_login'
             ))
             ->add('intervalLastLogin', 'column', array(
