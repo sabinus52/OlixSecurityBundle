@@ -41,7 +41,7 @@ class UserManagerController extends Controller
         
         // Création de la Datatables
         $datatable = $this->get('olix_security.datatable.user');
-        $datatable->buildDatatableView();
+        $datatable->buildDatatable();
         
         // Serialize les données
         $normalizer = new GetSetMethodNormalizer();

@@ -17,10 +17,11 @@ use Sg\DatatablesBundle\Datatable\Column\ActionColumn;
 class UserDatatable extends AbstractDatatableView
 {
 
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(false);
+        $this->features->setFeatures(array(
+            'server_side' => false,
+        ));
         
         // Déclarations des colonnes
         $this->getColumnBuilder()

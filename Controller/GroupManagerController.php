@@ -36,7 +36,7 @@ class GroupManagerController extends Controller
         
         // Création de la Datatables
         $datatable = $this->get('olix_security.datatable.group');
-        $datatable->buildDatatableView();
+        $datatable->buildDatatable();
         $serializer = $this->get('sg_datatables.serializer');
         $datatable->setData($serializer->serialize($result, 'json'));
         
