@@ -16,9 +16,7 @@ services:
 
     olix_security.datatable.user:
         class: Olix\SecurityBundle\Datatables\UserDatatable
-        tags:
-            - { name: sg.datatable.view }
+        parent: sg_datatables.datatable.abstract
     olix_security.datatable.group:
         class: Olix\SecurityBundle\Datatables\GroupDatatable
-        tags:
-            - { name: sg.datatable.view }
+        parent: sg_datatables.datatable.abstract

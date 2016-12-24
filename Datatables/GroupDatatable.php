@@ -10,17 +10,31 @@
 
 namespace Olix\SecurityBundle\Datatables;
 
-use Olix\DatatablesBootstrapBundle\Datatable\AbstractDatatableView;
-use Sg\DatatablesBundle\Datatable\Column\ActionColumn;
+use Olix\DatatablesBootstrapBundle\Datatable\View\AbstractDatatableView;
 
 
 class GroupDatatable extends AbstractDatatableView
 {
 
-    public function buildDatatable()
+    /**
+     * Entité des groupes "fos_user.group.group_class" (config.yml)
+     * @var string
+     */
+    private $entity;
+
+
+    /**
+     * Construction de la DataTable
+     * 
+     * {@inheritDoc}
+     * @see \Sg\DatatablesBundle\Datatable\View\DatatableViewInterface::buildDatatable()
+     */
+    public function buildDatatable(array $options = array())
     {
-        $this->features->setFeatures(array(
-            'server_side' => false,
+        $this->entity = $options['entity'];
+        
+        $this->ajax->set(array(
+            'url' => $this->router->generate('olix_security_manager_group_results'),
         ));
         
         // Déclarations des colonnes
@@ -30,10 +44,10 @@ class GroupDatatable extends AbstractDatatableView
                   'class' => 'text-center',
             ))
             ->add('name', 'column', array(
-                  'title' => 'Nom'
+                  'title' => 'Nom',
             ))
             ->add('roles', 'column', array(
-                  'title' => 'Rôles'
+                  'title' => 'Rôles',
             ))
             // Boutons Actions
             ->add(null, 'action', array(
@@ -49,7 +63,7 @@ class GroupDatatable extends AbstractDatatableView
                             'rel' => 'tooltip',
                             'title' => 'Modifier ce groupe',
                             'class' => 'btn btn-primary btn-xs btn-update',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                     array(
@@ -62,7 +76,7 @@ class GroupDatatable extends AbstractDatatableView
                             'title' => 'Supprimer ce groupe',
                             'class' => 'btn btn-danger btn-xs btn-delete',
                             'role' => 'button',
-                            'onclick' => 'return olixAdminInterface.confirmDelete(this)'
+                            'onclick' => 'return olixAdminInterface.confirmDelete(this)',
                         ),
                     ),
                 )
@@ -76,7 +90,7 @@ class GroupDatatable extends AbstractDatatableView
      */
     public function getEntity()
     {
-        return;
+        return $this->entity;
     }
 
 

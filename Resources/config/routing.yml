@@ -26,6 +26,9 @@ olix_security_manager:
 olix_security_manager_user_list:
     pattern:  /security/users
     defaults: { _controller: "OlixSecurityBundle:UserManager:list" }
+olix_security_manager_user_results:
+    pattern:  /security/users/results
+    defaults: { _controller: "OlixSecurityBundle:UserManager:getResults" }
 olix_security_manager_user_create:
     pattern:  /security/users/create
     defaults: { _controller: "OlixSecurityBundle:UserManager:create" }
@@ -51,6 +54,9 @@ olix_security_manager_user_changepwd:
 olix_security_manager_group_list:
     pattern:  /security/groups
     defaults: { _controller: "OlixSecurityBundle:GroupManager:list" }
+olix_security_manager_group_results:
+    pattern:  /security/groups/results
+    defaults: { _controller: "OlixSecurityBundle:GroupManager:getResults" }
 olix_security_manager_group_create:
     pattern:  /security/groups/create
     defaults: { _controller: "OlixSecurityBundle:GroupManager:create" }

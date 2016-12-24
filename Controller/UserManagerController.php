@@ -35,30 +35,40 @@ class UserManagerController extends Controller
             throw new AccessDeniedException();
         }
         
-        // Liste de tous les utilisateurs
-        $manager = $this->container->get('fos_user.user_manager');
-        $result = $manager->findUsers();
-        
         // Création de la Datatables
         $datatable = $this->get('olix_security.datatable.user');
-        $datatable->buildDatatable();
-        
-        // Serialize les données
-        $normalizer = new GetSetMethodNormalizer();
-        $normalizer->setIgnoredAttributes(array('groups'));
-        $encoder = new JsonEncoder();
-        $serializer = new Serializer(array($normalizer), array($encoder));
-        $datatable->setData($serializer->serialize($result, 'json'));
+        $datatable->buildDatatable(array(
+            'entity' => $this->container->getParameter('fos_user.model.user.class'),
+            'delay'  => $this->container->getParameter('olix.security.activity.delay'),
+        ));
         
         // Déclaration d'un formulaire vide pour la suppression d'un élément pour éviter le piratage
         $form = $this->createFormBuilder()->getForm();
         
         // Affichage de la page
         return $this->container->get('olix.admin')->render('OlixSecurityBundle:UserManager:list.html.twig', 'olix_security_users', array(
-            'delay_online' => $this->container->getParameter('olix.security.activity.delay'),
             'form'         => $form->createView(),
             'datatable'    => $datatable,
         ));
+    }
+
+
+    /**
+     * Retourne les utilisateurs en mode AJAX
+     *
+     * @return \Symfony\Component\HttpFoundation\Response : JSON
+     */
+    public function getResultsAction()
+    {
+        $datatable = $this->get('olix_security.datatable.user');
+        $datatable->buildDatatable(array(
+            'entity' => $this->container->getParameter('fos_user.model.user.class'),
+            'delay'  => $this->container->getParameter('olix.security.activity.delay'),
+        ));
+        
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+        
+        return $query->getResponse();
     }
 
 

@@ -39,7 +39,7 @@
 
 <script type="text/javascript">
 
-var asset = '{{ asset('') }}';
+var asset = '{{ asset('bundles/olixsecurity/avatar/') }}';
 
 function render_column_avatar(data, type, row, meta) {
     if (data.substr(0, 4) == 'http')
@@ -49,7 +49,7 @@ function render_column_avatar(data, type, row, meta) {
 }
 
 function render_column_online(data, type, row, meta) {
-    if (data < {{ delay_online }})
+    if (data)
         return '<span class="label label-success">En ligne</span>';
     else
         return '<span class="label label-danger">Hors ligne</span>';

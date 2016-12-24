@@ -18,12 +18,12 @@
         "User management"
     ],
     "require": {
-        "symfony/symfony": "~2.6",
+        "symfony/symfony": "~2.8",
         "doctrine/orm": "~2.2",
         "doctrine/doctrine-bundle": "~1.2",
-        "olix/datatables-bootstrap-bundle": "dev-master",
-        "olix/formsext-bootstrap-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "olix/datatables-bootstrap-bundle": "0.13.*",
+        "olix/formsext-bootstrap-bundle": "0.2.*",
+        "friendsofsymfony/user-bundle": "~1.3"
     },
     "autoload" : {
         "psr-4" : {

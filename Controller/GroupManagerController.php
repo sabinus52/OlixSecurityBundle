@@ -30,15 +30,9 @@ class GroupManagerController extends Controller
             throw new AccessDeniedException();
         }
         
-        // Liste de tous les groupes
-        $manager = $this->container->get('fos_user.group_manager');
-        $result = $manager->findGroups();
-        
         // Création de la Datatables
         $datatable = $this->get('olix_security.datatable.group');
-        $datatable->buildDatatable();
-        $serializer = $this->get('sg_datatables.serializer');
-        $datatable->setData($serializer->serialize($result, 'json'));
+        $datatable->buildDatatable(array('entity' => $this->container->getParameter('fos_user.model.group.class')));
         
         // Déclaration d'un formulaire vide pour la suppression d'un élément pour éviter le piratage
         $form = $this->createFormBuilder()->getForm();
@@ -48,6 +42,22 @@ class GroupManagerController extends Controller
             'form'         => $form->createView(),
             'datatable'    => $datatable,
         ));
+    }
+
+
+    /**
+     * Retourne les groupes en mode AJAX
+     *
+     * @return \Symfony\Component\HttpFoundation\Response : JSON
+     */
+    public function getResultsAction()
+    {
+        $datatable = $this->get('olix_security.datatable.group');
+        $datatable->buildDatatable(array('entity' => $this->container->getParameter('fos_user.model.group.class')));
+        
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+        
+        return $query->getResponse();
     }
 
 
