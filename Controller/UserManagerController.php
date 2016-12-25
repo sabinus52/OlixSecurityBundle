@@ -13,9 +13,6 @@ namespace Olix\SecurityBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
 use Olix\SecurityBundle\Form\Type\UserCreateFormType;
 use Olix\SecurityBundle\Form\Type\UserEditFormType;
 use Olix\SecurityBundle\Form\Type\UserChangePwdFormType;
@@ -141,7 +138,11 @@ class UserManagerController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
                 // Initialise l'expiration
-                $user->setExpiresAt($form->get('expiresAt')->getData());
+                $expires = $form->get('expiresAt')->getData();
+                if ($expires)
+                    $user->setExpiresAt($form->get('expiresAt')->getData());
+                else
+                    $user->setExpiresAt(new \DateTime('2099-12-31'));
                 
                 $manager->updateUser($user);
                 

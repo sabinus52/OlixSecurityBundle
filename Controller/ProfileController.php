@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Finder\Finder;
 use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Form\Type\ChangePasswordFormType;
 use Olix\SecurityBundle\Form\Type\ProfileFormType;
 use Olix\SecurityBundle\Avatar;
 use Olix\SecurityBundle\Avatar\Gravatar;
@@ -39,10 +38,7 @@ class ProfileController extends Controller
             new ProfileFormType($this->container->getParameter('fos_user.model.user.class')),
             $user
         );
-        $formPassword = $this->createForm(
-            new ChangePasswordFormType($this->container->getParameter('fos_user.model.user.class')),
-            $user
-        );
+        $formPassword = $this->container->get('fos_user.change_password.form');
         
         $formProfile->handleRequest($this->getRequest());
         if ($formProfile->isValid()) {
@@ -102,15 +98,11 @@ class ProfileController extends Controller
             new ProfileFormType($this->container->getParameter('fos_user.model.user.class')),
             $user
         );
-        $formPassword = $this->createForm(
-            new ChangePasswordFormType($this->container->getParameter('fos_user.model.user.class')),
-            $user
-        );
+        $formPassword = $this->container->get('fos_user.change_password.form');
         
-        $formPassword->handleRequest($this->getRequest());
-        if ($formPassword->isValid()) {
-            $userManager = $this->get('fos_user.user_manager');
-            $userManager->updateUser($user);
+        $formHandler = $this->container->get('fos_user.change_password.form.handler');
+        $process = $formHandler->process($user);
+        if ($process) {
             $this->container->get('session')->getFlashBag()->set('success', $this->get('translator')->trans('change_password.flash.success', array(), 'FOSUserBundle'));
             return $this->redirect($this->generateUrl('olix_security_profile_edit'));
         }

@@ -7,7 +7,7 @@
 {% block fos_user_content %}
 
 {% if error %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> {{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 
 <div class="olix-portlet olix-portlet-border">
